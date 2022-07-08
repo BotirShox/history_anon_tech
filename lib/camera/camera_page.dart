@@ -1,33 +1,39 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:history_anon_tech/camera/media_page.dart';
 import 'package:history_anon_tech/camera/view_video.dart';
 import 'package:path/path.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-
 import '../main_page.dart';
 
 late List<CameraDescription> cameras;
 
 class CameraScreen extends StatefulWidget {
-  CameraScreen({Key? key}) : super(key: key);
 
+  CameraScreen({Key? key}) : super(key: key);
   @override
   _CameraScreenState createState() => _CameraScreenState();
 }
 
 class _CameraScreenState extends State<CameraScreen> {
+
   late CameraController _cameraController;
   late Future<void> cameraValue;
   bool isRecoring = false;
   bool flash = false;
   bool iscamerafront = true;
   double transform = 0;
+  File? image;
+  ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
+
     super.initState();
     _cameraController = CameraController(cameras[0], ResolutionPreset.high);
     cameraValue = _cameraController.initialize();
@@ -35,12 +41,14 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   void dispose() {
+
     super.dispose();
     _cameraController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Stack(
         children: [
@@ -93,19 +101,17 @@ class _CameraScreenState extends State<CameraScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButton(
-                          icon: Icon(
-                            flash ? Icons.flash_on : Icons.flash_off,
+                          icon: Icon(Icons.image,
                             color: Colors.white,
-                            size: 28,
                           ),
-                          onPressed: () {
-                            setState(() {
-                              flash = !flash;
-                            });
-                            flash
-                                ? _cameraController
-                                .setFlashMode(FlashMode.torch)
-                                : _cameraController.setFlashMode(FlashMode.off);
+                          onPressed: () async {
+                            XFile file = await _picker.pickImage(source: ImageSource.gallery) as XFile;
+                          if (file != null){
+                            Navigator.push(context, MaterialPageRoute(builder: (builder) => MediaSavePage(path: file.path)));}
+                          else{
+                            XFile file = await _picker.pickVideo(source: ImageSource.gallery) as XFile;
+                            Navigator.push(context, MaterialPageRoute(builder: (builder) => VideoViewPage(path: file.path)));
+                          }
                           }),
                       GestureDetector(
                         onLongPress: () async {
@@ -182,6 +188,7 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   void takePhoto(BuildContext context) async {
+
     XFile file = await _cameraController.takePicture();
     Navigator.push(
         context,

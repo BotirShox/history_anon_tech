@@ -55,5 +55,6 @@
 
   
 Дизайн:
-    
-![img.png](img.png)
+
+    ![](../../Desktop/Screenshot_20220708_194402.png)
+    ![img.png](img.png)

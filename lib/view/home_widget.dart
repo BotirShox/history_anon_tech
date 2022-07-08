@@ -102,7 +102,7 @@ Widget myStoryWidget({required double size, required String myImageUrl,
 Widget storyWidget({required double size, required String imageUrl,
   required bool showStrip, required String text, required BuildContext context}){
   return GestureDetector(
-    onTap: () {Navigator.push(context, CupertinoPageRoute(builder: (context) => const VideoViewPage(path: 'path',)));},
+    onTap: () {Navigator.push(context, CupertinoPageRoute(builder: (context) => const StoryPage()));},
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2),
       child: Column (
