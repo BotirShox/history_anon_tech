@@ -26,7 +26,7 @@ class _MainPageState extends State<MainPage> {
               const SizedBox(height: 25),
               Row(
                 children: [
-                  Text("Главная", style: TextStyle (fontSize: 35, fontWeight: FontWeight.w500,) )
+                  Text("Главная", style: TextStyle (fontSize: 35, fontFamily: 'Ubuntu', fontWeight: FontWeight.w500,) )
                 ],
                 mainAxisAlignment: MainAxisAlignment.start,
 

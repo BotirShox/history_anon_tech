@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:history_anon_tech/camera/camera_page.dart';
 import 'package:history_anon_tech/camera/media_page.dart';
+import 'package:history_anon_tech/camera/view_video.dart';
 import 'package:history_anon_tech/story_pages/user_data.dart';
 import '../story_pages/my.dart';
 import '../story_pages/story.dart';
@@ -9,14 +10,14 @@ import '../story_pages/story.dart';
 Widget addStoryWidget({required double size, required IconData iconData, required BuildContext context}){
   return GestureDetector(
     onTap: () {
-      Navigator.push(context, CupertinoPageRoute(builder: (context) => const CameraPage()));
+      Navigator.push(context, CupertinoPageRoute(builder: (context) => CameraScreen()));
     },
     child: Padding(
       padding: const EdgeInsets.only(top: 13),
       child: Container(
         width: size,
         height: size,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.black,
         ),
@@ -38,7 +39,7 @@ Widget myStoryWidget({required double size, required String myImageUrl,
             width: size,
             height: size,
             decoration: BoxDecoration(
-                gradient: RadialGradient(
+                gradient: const RadialGradient(
                     colors: [
                       Color(0x80FF5353),
                       Color(0x99FFA09C),
@@ -54,7 +55,7 @@ Widget myStoryWidget({required double size, required String myImageUrl,
                 height: size,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    gradient: SweepGradient(
+                    gradient: const SweepGradient(
                         colors: [
                           Color(0x80FFD600),
                           Color(0x80EC9696),
@@ -88,7 +89,7 @@ Widget myStoryWidget({required double size, required String myImageUrl,
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           Text(text),
@@ -101,7 +102,7 @@ Widget myStoryWidget({required double size, required String myImageUrl,
 Widget storyWidget({required double size, required String imageUrl,
   required bool showStrip, required String text, required BuildContext context}){
   return GestureDetector(
-    onTap: () {Navigator.push(context, CupertinoPageRoute(builder: (context) => const MediaSavePage()));},
+    onTap: () {Navigator.push(context, CupertinoPageRoute(builder: (context) => const VideoViewPage(path: 'path',)));},
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2),
       child: Column (
@@ -110,7 +111,7 @@ Widget storyWidget({required double size, required String imageUrl,
             width: size,
             height: size,
             decoration: BoxDecoration(
-                gradient: RadialGradient(
+                gradient: const RadialGradient(
                   colors: [
                     Color(0x80FF5353),
                     Color(0x99FFA09C),
@@ -126,7 +127,7 @@ Widget storyWidget({required double size, required String imageUrl,
                 height: size,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    gradient: SweepGradient(
+                    gradient: const SweepGradient(
                         colors: [
                           Color(0x80FFD600),
                           Color(0x80EC9696),
@@ -160,7 +161,7 @@ Widget storyWidget({required double size, required String imageUrl,
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           Text(text),

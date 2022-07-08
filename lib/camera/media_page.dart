@@ -1,18 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MediaSavePage extends StatefulWidget {
-  const MediaSavePage({super.key});
+class MediaSavePage extends StatelessWidget {
+  const MediaSavePage({Key? key, required this.path}) : super(key: key);
+  final String path;
 
-  @override
-  _MediaSavePageState createState() => _MediaSavePageState();
-}
-class _MediaSavePageState extends State<MediaSavePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      body: Image.network("https://images6.fanpop.com/image/photos/41700000/It-s-a-girl-prettygirls-41785081-676-949.jpg",
+      body: Image.file(
+        File(path),
         fit: BoxFit.cover,
         height: double.infinity,
         width: double.infinity,
