@@ -10,4 +10,4 @@ class Shade{
 }
 
 const Color background = Color(0xFFFFFFFF);
-Shade redGradient = Shade(Color(0xFFE25C5C), Color(0xFFEFEFEF));
+Shade redGradient = Shade(Color(0xFFE25C5C), Color(0xFFD3A07A));

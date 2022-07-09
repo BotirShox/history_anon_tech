@@ -6,7 +6,6 @@ import 'constants/colour.dart';
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
-
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -26,7 +25,7 @@ class _MainPageState extends State<MainPage> {
               const SizedBox(height: 25),
               Row(
                 children: [
-                  Text("Главная", style: TextStyle (fontSize: 35, fontFamily: 'Ubuntu', fontWeight: FontWeight.w500,) )
+                  Text("Главная", style: TextStyle (fontSize: 35))
                 ],
                 mainAxisAlignment: MainAxisAlignment.start,
 

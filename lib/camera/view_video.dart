@@ -1,30 +1,37 @@
 import 'dart:io';
+import 'package:camera/camera.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gallery_saver/gallery_saver.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import '../story_pages/story.dart';
 
 class VideoViewPage extends StatefulWidget {
-  const VideoViewPage({Key? key, required this.path}) : super(key: key);
-  final String path;
+  VideoViewPage({Key? key, required this.path}) : super(key: key);
+  late String path;
 
   @override
-  _VideoViewPageState createState() => _VideoViewPageState();
+  _VideoViewPageState createState() => _VideoViewPageState(path);
 }
 
 class _VideoViewPageState extends State<VideoViewPage> {
   late VideoPlayerController _controller;
+  final String path;
+
+  _VideoViewPageState(this.path);
 
   @override
   void initState() {
     super.initState();
     _controller = VideoPlayerController.file(File(widget.path))
       ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +40,15 @@ class _VideoViewPageState extends State<VideoViewPage> {
       floatingActionButton: Container(
           width: 328,
           height: 40,
-      child: FloatingActionButton(onPressed: () {  },
+      child: FloatingActionButton(onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (builder) => StoryPage(
+                  path: path, stories: [],
+                )));
+        Fluttertoast.showToast(msg: "Видео успено опубликовано!");
+      },
       backgroundColor: Color(0xFF8F8F8F),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -55,7 +70,12 @@ class _VideoViewPageState extends State<VideoViewPage> {
                 size: 30.0,
                 color: Colors.white,
               ),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () async {
+                await GallerySaver.saveVideo(widget.path);
+                Fluttertoast.showToast(
+                  msg: "Видео успешно сохранено!",
+                );
+              },
             ),
           ],
         ),

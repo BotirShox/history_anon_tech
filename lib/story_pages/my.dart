@@ -17,7 +17,7 @@ class _StoryScreenState extends State<StoryScreen>
 
   late PageController _pageController;
   late AnimationController _animController;
-   late VideoPlayerController _videoController;
+  late VideoPlayerController _videoController;
   int _currentIndex = 0;
 
   get key => null;
@@ -76,7 +76,7 @@ class _StoryScreenState extends State<StoryScreen>
                 switch (story.media) {
                   case MediaType.image:
                     return CachedNetworkImage(
-                      imageUrl: story.url,
+                      imageUrl: story.file,
                       fit: BoxFit.cover,
                     );
                   case MediaType.video:
@@ -178,9 +178,9 @@ class _StoryScreenState extends State<StoryScreen>
         _animController.forward();
         break;
       case MediaType.video:
-       // _videoController = null;
+      // _videoController = null;
         _videoController?.dispose();
-        _videoController = VideoPlayerController.network(story.url)
+        _videoController = VideoPlayerController.network(story.file)
           ..initialize().then((_) {
             setState(() {});
             if (_videoController.value.isInitialized) {
@@ -225,8 +225,8 @@ class AnimatedBar extends StatelessWidget {
                 _buildContainer(
                   double.infinity,
                   position < currentIndex
-                      ? Colors.white
-                      : Colors.white.withOpacity(0.5),
+                      ? Colors.transparent
+                      : Colors.transparent
                 ),
                 position == currentIndex
                     ? AnimatedBuilder(
@@ -234,7 +234,7 @@ class AnimatedBar extends StatelessWidget {
                   builder: (context, child) {
                     return _buildContainer(
                       constraints.maxWidth * animController.value,
-                      Colors.white,
+                      Colors.transparent,
                     );
                   },
                 )
@@ -254,7 +254,7 @@ class AnimatedBar extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         border: Border.all(
-          color: Colors.black26,
+          color: Colors.transparent,
           width: 0.8,
         ),
         borderRadius: BorderRadius.circular(3.0),

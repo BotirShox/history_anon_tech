@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import '../main_page.dart';
+import 'package:history_anon_tech/model/for_story.dart';
 
 late List<CameraDescription> cameras;
 
@@ -28,14 +29,14 @@ class _CameraScreenState extends State<CameraScreen> {
   bool flash = false;
   bool iscamerafront = true;
   double transform = 0;
-  File? image;
   ImagePicker _picker = ImagePicker();
+
 
   @override
   void initState() {
 
     super.initState();
-    _cameraController = CameraController(cameras[0], ResolutionPreset.high);
+    _cameraController = CameraController(cameras[0], ResolutionPreset.ultraHigh);
     cameraValue = _cameraController.initialize();
   }
 
@@ -57,8 +58,9 @@ class _CameraScreenState extends State<CameraScreen> {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return Container(
-                      height: double.infinity,
-                      width: double.infinity,
+                    padding: EdgeInsets.only(top: 10),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
                       child: CameraPreview(_cameraController));
                 } else {
                   return Center(
@@ -72,6 +74,7 @@ class _CameraScreenState extends State<CameraScreen> {
             color: Colors.transparent,
               padding: EdgeInsets.only(top: 45),
               width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
               child: Column(
                 children: [
                   Row(
