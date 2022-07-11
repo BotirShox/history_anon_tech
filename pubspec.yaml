@@ -42,7 +42,10 @@ dependencies:
   path:
   fluttertoast: ^8.0.7
   cached_network_image:
+  mime: ^1.0.2
   video_player:
+  file_picker: ^4.6.1
+  sqflite:
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +63,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - assets/database.db
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -86,6 +91,7 @@ flutter:
     - family: Ubuntu
       fonts:
         - asset: assets/fonts/Ubuntu-Medium.ttf
+
   #      - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

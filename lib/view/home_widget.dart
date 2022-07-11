@@ -30,7 +30,7 @@ Widget addStoryWidget({required double size, required IconData iconData, require
 Widget myStoryWidget({required double size, required String myImageUrl,
   required bool showStrip, required String text, required BuildContext context}){
   return GestureDetector(
-    onTap: () {Navigator.push(context, CupertinoPageRoute(builder: (context) => StoryScreen(stories: stories,)));},
+    onTap: () {Navigator.push(context, CupertinoPageRoute(builder: (context) => StoryScreen(stories: stories)));},
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2),
       child: Column (
@@ -102,7 +102,7 @@ Widget myStoryWidget({required double size, required String myImageUrl,
 Widget storyWidget({required double size, required String imageUrl,
   required bool showStrip, required String text, required BuildContext context}){
   return GestureDetector(
-    onTap: () {Navigator.push(context, CupertinoPageRoute(builder: (context) => StoryPage(path: "", stories: [],)));},
+    onTap: () {Navigator.push(context, CupertinoPageRoute(builder: (context) => StoryPage(path: "",)));},
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2),
       child: Column (

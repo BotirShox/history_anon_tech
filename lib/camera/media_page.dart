@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -8,21 +9,55 @@ import 'package:history_anon_tech/story_pages/story.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
 import '../model/for_story.dart';
 import '../story_pages/user_data.dart';
+import 'package:path/path.dart';
+import 'dart:typed_data';
+import 'package:flutter/services.dart'
+;
+/*
+var databasesPath = await getDatabasesPath();
+var path = join(databasesPath, "database.db");
 
+// Check if the database exists
+var exists = await databaseExists(path);
+
+if (exists) async {
+// Should happen only the first time you launch your application
+print("Creating new copy from asset");
+
+// Make sure the parent directory exists
+try {
+await Directory(dirname(path)).create(recursive: true);
+} catch (_) {}
+
+// Copy from asset
+ByteData data = await rootBundle.load(join("assets", "database.db"));
+List<int> bytes =
+data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+
+// Write and flush the bytes written
+await File(path).writeAsBytes(bytes, flush: true);
+
+} else {
+print("Opening existing database");
+}
+// open the database
+Database db = await openDatabase(path, readOnly: true);
+*/
 
 class MediaSavePage extends StatelessWidget {
 
-  const MediaSavePage({Key? key, required this.path}) : super(key: key);
-  final String path;
+  const MediaSavePage({Key? key, required this.pathImg}) : super(key: key);
+  final String pathImg;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: Image.file(
-        File(path),
+        File(pathImg),
         fit: BoxFit.cover,
         height: double.infinity,
         width: double.infinity,
@@ -42,7 +77,9 @@ class MediaSavePage extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () async {
-              GallerySaver.saveImage(path);
+              GallerySaver.saveImage(pathImg);
+              String a = GallerySaver.pleaseProvidePath;
+              print(a);
               Fluttertoast.showToast(
                 msg: "Фото успешно сохранено!",
               );
@@ -62,12 +99,19 @@ class MediaSavePage extends StatelessWidget {
           ),
           child: Text("Опубликовать"),
           onPressed: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (builder) => StoryPage(path: path, stories: [],)),);
+            moveImage(context);
             Fluttertoast.showToast(msg: "Фото успено опубликовано!");
           },
         ),
       ),
     );
+  }
+  void moveImage(BuildContext context) async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (builder) => StoryPage(
+              path: pathImg,
+            )));
   }
 }

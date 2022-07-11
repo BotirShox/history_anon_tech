@@ -1,12 +1,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:history_anon_tech/database/sqlite_service.dart';
 import 'package:history_anon_tech/model/for_story.dart';
+import 'package:history_anon_tech/story_pages/user_data.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:video_player/video_player.dart';
 
 class StoryScreen extends StatefulWidget {
-  final List<Stories> stories;
 
-  const StoryScreen({required this.stories});
+  List<Stories>? stories;
+  // All items
+  /*List<Media> _media = [];
+// This function is used to fetch all data from the database
+  void _refreshNotes() async {
+    final data = await SqliteService.getItems();
+    setState(() {
+      _media = data;
+    });
+  }*/
+
+
+  StoryScreen({Key? key, required this.stories}):super(key:key);
 
   @override
   _StoryScreenState createState() => _StoryScreenState();
@@ -19,8 +34,8 @@ class _StoryScreenState extends State<StoryScreen>
   late AnimationController _animController;
   late VideoPlayerController _videoController;
   int _currentIndex = 0;
-
-  get key => null;
+ // Download the SQLite file
+ // String path = await getDatabasesPath();
 
   @override
   void initState() {
@@ -28,7 +43,7 @@ class _StoryScreenState extends State<StoryScreen>
     _pageController = PageController();
     _animController = AnimationController(vsync: this);
 
-    final Stories firstStory = widget.stories.first;
+    final Stories firstStory = widget.stories!.first;
     _loadStory(story: firstStory, animateToPage: false);
 
     _animController.addStatusListener((status) {
@@ -36,14 +51,14 @@ class _StoryScreenState extends State<StoryScreen>
         _animController.stop();
         _animController.reset();
         setState(() {
-          if (_currentIndex + 1 < widget.stories.length) {
+          if (_currentIndex + 1 < widget.stories!.length) {
             _currentIndex += 1;
-            _loadStory(story: widget.stories[_currentIndex]);
+            _loadStory(story: widget.stories![_currentIndex]);
           } else {
             // Out of bounds - loop story
             // You can also Navigator.of(context).pop() here
             _currentIndex = 0;
-            _loadStory(story: widget.stories[_currentIndex]);
+            _loadStory(story: widget.stories![_currentIndex]);
           }
         });
       }
@@ -54,13 +69,13 @@ class _StoryScreenState extends State<StoryScreen>
   void dispose() {
     _pageController.dispose();
     _animController.dispose();
-    _videoController?.dispose();
+    _videoController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Stories story = widget.stories[_currentIndex];
+    final Stories story = widget.stories![_currentIndex];
     return Scaffold(
       backgroundColor: Colors.black,
       body: GestureDetector(
@@ -69,10 +84,10 @@ class _StoryScreenState extends State<StoryScreen>
           children: <Widget>[
             PageView.builder(
               controller: _pageController,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: widget.stories.length,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: widget.stories!.length,
               itemBuilder: (context, i) {
-                final Stories story = widget.stories[i];
+                final Stories story = widget.stories![i];
                 switch (story.media) {
                   case MediaType.image:
                     return CachedNetworkImage(
@@ -80,8 +95,7 @@ class _StoryScreenState extends State<StoryScreen>
                       fit: BoxFit.cover,
                     );
                   case MediaType.video:
-                    if (_videoController != null &&
-                        _videoController.value.isInitialized) {
+                    if (_videoController.value.isInitialized) {
                       return FittedBox(
                         fit: BoxFit.cover,
                         child: SizedBox(
@@ -102,7 +116,7 @@ class _StoryScreenState extends State<StoryScreen>
               child: Column(
                 children: <Widget>[
                   Row(
-                    children: widget.stories
+                    children: widget.stories!
                         .asMap()
                         .map((i, e) {
                       return MapEntry(
@@ -111,7 +125,6 @@ class _StoryScreenState extends State<StoryScreen>
                           animController: _animController,
                           position: i,
                           currentIndex: _currentIndex,
-                          key: key,
                         ),
                       );
                     })
@@ -123,7 +136,7 @@ class _StoryScreenState extends State<StoryScreen>
                       horizontal: 1.5,
                       vertical: 10.0,
                     ),
-                    child: UserInfo(key: key,),
+                    child: UserInfo(),
                   ),
                 ],
               ),
@@ -141,19 +154,19 @@ class _StoryScreenState extends State<StoryScreen>
       setState(() {
         if (_currentIndex - 1 >= 0) {
           _currentIndex -= 1;
-          _loadStory(story: widget.stories[_currentIndex]);
+          _loadStory(story: widget.stories![_currentIndex]);
         }
       });
     } else if (dx > 2 * screenWidth / 3) {
       setState(() {
-        if (_currentIndex + 1 < widget.stories.length) {
+        if (_currentIndex + 1 < widget.stories!.length) {
           _currentIndex += 1;
-          _loadStory(story: widget.stories[_currentIndex]);
+          _loadStory(story: widget.stories![_currentIndex]);
         } else {
           // Out of bounds - loop story
           // You can also Navigator.of(context).pop() here
           _currentIndex = 0;
-          _loadStory(story: widget.stories[_currentIndex]);
+          _loadStory(story: widget.stories![_currentIndex]);
         }
       });
     } else {
@@ -178,8 +191,8 @@ class _StoryScreenState extends State<StoryScreen>
         _animController.forward();
         break;
       case MediaType.video:
-      // _videoController = null;
-        _videoController?.dispose();
+       _videoController != null;
+        _videoController.dispose();
         _videoController = VideoPlayerController.network(story.file)
           ..initialize().then((_) {
             setState(() {});
@@ -207,7 +220,7 @@ class AnimatedBar extends StatelessWidget {
   final int currentIndex;
 
   const AnimatedBar({
-    required Key key,
+    Key? key,
     required this.animController,
     required this.position,
     required this.currentIndex,
@@ -266,7 +279,7 @@ class AnimatedBar extends StatelessWidget {
 class UserInfo extends StatelessWidget {
 
   const UserInfo({
-    required Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -278,7 +291,6 @@ class UserInfo extends StatelessWidget {
         IconButton(
           icon: const Icon(
             Icons.close,
-            size: 30.0,
             color: Colors.white,
           ),
           onPressed: () => Navigator.of(context).pop(),

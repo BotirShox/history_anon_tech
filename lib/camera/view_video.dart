@@ -8,26 +8,31 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import '../database/sqlite_service.dart';
 import '../story_pages/story.dart';
 
 class VideoViewPage extends StatefulWidget {
-  VideoViewPage({Key? key, required this.path}) : super(key: key);
-  late String path;
+  VideoViewPage({Key? key, required this.pathVid}) : super(key: key);
+  late String pathVid;
 
   @override
-  _VideoViewPageState createState() => _VideoViewPageState(path);
+  _VideoViewPageState createState() => _VideoViewPageState(pathVid);
 }
 
 class _VideoViewPageState extends State<VideoViewPage> {
   late VideoPlayerController _controller;
-  final String path;
+  final String pathVid;
+ // late SqliteService _sqliteService;
 
-  _VideoViewPageState(this.path);
+  _VideoViewPageState(this.pathVid);
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.file(File(widget.path))
+   // this._sqliteService= SqliteService();
+   // this._sqliteService.initializeDB().whenComplete(() async {
+     // await _refreshNotes();
+    _controller = VideoPlayerController.file(File(widget.pathVid))
       ..initialize().then((_) {
         setState(() {});
       });
@@ -41,11 +46,11 @@ class _VideoViewPageState extends State<VideoViewPage> {
           width: 328,
           height: 40,
       child: FloatingActionButton(onPressed: () {
-        Navigator.push(
+        final value = Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (builder) => StoryPage(
-                  path: path, stories: [],
+                  path: pathVid,
                 )));
         Fluttertoast.showToast(msg: "Видео успено опубликовано!");
       },
@@ -71,7 +76,7 @@ class _VideoViewPageState extends State<VideoViewPage> {
                 color: Colors.white,
               ),
               onPressed: () async {
-                await GallerySaver.saveVideo(widget.path);
+                await GallerySaver.saveVideo(widget.pathVid);
                 Fluttertoast.showToast(
                   msg: "Видео успешно сохранено!",
                 );
