@@ -1,8 +1,14 @@
+
 **Тестовое задание: Запись, загрузка и просмотр Фото/Видео материала.**
 
 **Формат: История**
 
 **Экран “Запись историй”**
+
+
+![1657567840953](https://user-images.githubusercontent.com/38154419/178344090-106f7f8a-365a-4ac5-9d6e-5b3c94b00f2d.jpg) ![1657567840960](https://user-images.githubusercontent.com/38154419/178344097-dc1bc601-37cf-4265-b487-691c69708d71.jpg) ![1657567840965](https://user-images.githubusercontent.com/38154419/178344101-df54ae72-71db-4587-b048-f297fe6070a6.jpg) ![1657567840970](https://user-images.githubusercontent.com/38154419/178344143-a19b7909-e93a-4c36-a993-35120f41f6de.jpg) ![1657567840975](https://user-images.githubusercontent.com/38154419/178344155-ac4b0750-ae2b-4543-99ef-cb11a20e35c9.jpg) ![1657567840980](https://user-images.githubusercontent.com/38154419/178344170-48bf0816-95c7-402c-9b6a-3bfc6ed6a169.jpg) ![1657567840984](https://user-images.githubusercontent.com/38154419/178344192-4e2a805b-bdd3-4399-b8a7-aacdebdc1b24.jpg) ![1657567840990](https://user-images.githubusercontent.com/38154419/178344233-efbd4a34-79e9-4722-88ad-37f65750f4dd.jpg) ![1657567840995](https://user-images.githubusercontent.com/38154419/178344238-f07491d7-0344-463b-aa6e-5918abbc9143.jpg) ![1657567841000](https://user-images.githubusercontent.com/38154419/178344271-6777a38f-82de-47d5-b4c7-e3d0c34c91bb.jpg) ![1657567841005](https://user-images.githubusercontent.com/38154419/178344301-d60614ba-3166-44be-a4b9-33652ae61a27.jpg) ![1657567841010](https://user-images.githubusercontent.com/38154419/178344323-4590f23f-f9d7-4492-8539-5600a12e6d08.jpg) ![1657567868129](https://user-images.githubusercontent.com/38154419/178344363-d7343c07-689c-4ff9-849c-0b6d1aa37d7e.jpg) 
+
+
 
 1. Закрыть экран: (button)
     1. вернуться на предыдущий экран
